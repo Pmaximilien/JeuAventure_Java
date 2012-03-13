@@ -23,6 +23,8 @@ public class Game
     private Room currentRoom;
     private int etat;
     private HashMap<String, Room> salle;
+    private UserInterface gui;
+	private GameEngine engine;
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,8 +32,10 @@ public class Game
     {
 	parser = new Parser();
 	salle = new HashMap<String, Room>();
-
-	createRooms();
+	engine = new GameEngine();
+	gui = new UserInterface(engine);
+	engine.setGUI(gui);
+//	createRooms();
 	etat = 20;
     }
 
