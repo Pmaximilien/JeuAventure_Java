@@ -19,6 +19,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private String imageName;
 
     /**
      * Create a room described "description". Initially, it has
@@ -29,9 +30,15 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-	exits = new HashMap<String, Room>();
+        exits = new HashMap<String, Room>();
     }
 
+    public Room(String description, String image) 
+    {
+        this.description = description;
+        exits = new HashMap<String,Room>();
+		setImageName(image);
+    }
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
@@ -60,18 +67,31 @@ public class Room
 
      public String getExitString(){
      	StringBuilder info = new StringBuilder(128);
-	info.append("Exits: ");
+     	info.append("Exits: ");
 
-	Set<String> keys = exits.keySet();
-	for(String exit : keys)
-		info.append(" " + exit);
-	return info.toString();
+     	Set<String> keys = exits.keySet();
+     	for(String exit : keys)
+     		info.append(" " + exit);
+     	return info.toString();
      }
 
     public String getLongDescription(){
     	return "Your are " + description + ".\n" + getExitString();
 
      }
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public void setExit(String direction, Room neighbor) {
+		 exits.put(direction, neighbor);
+		
+	}
 
   }	
 

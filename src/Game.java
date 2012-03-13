@@ -15,7 +15,7 @@
  * @version 2006.03.30
  */
 
- import java.util.HashMap;
+import java.util.HashMap;
 
 public class Game 
 {
