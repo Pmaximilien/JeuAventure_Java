@@ -8,6 +8,6 @@ public class Main
 		Game mon_jeu = new Game();
 		
 
-		mon_jeu.play();
+		//mon_jeu.play();
 	}
 }
