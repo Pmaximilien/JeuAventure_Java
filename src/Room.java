@@ -29,7 +29,7 @@ public class Room
      */
     public Room(String description) 
     {
-        this.description = description;
+        this.description = d	scription;
         exits = new HashMap<String, Room>();
     }
 

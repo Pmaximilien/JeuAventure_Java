@@ -9,11 +9,14 @@
  * @author  Michael Kolling and David J. Barnes
  * @version 1.0 (Jan 2003)
  */
+import java.util.HashMap;
+
 public class GameEngine
 {
     private Parser parser;
     private Room currentRoom;
     private UserInterface gui;
+    private HashMap <String, Room> salle;
 
     /**
      * Constructor for objects of class GameEngine
@@ -21,6 +24,8 @@ public class GameEngine
     public GameEngine()
     {
         parser = new Parser();
+	salle = new HashMap<String, Room>();
+
         createRooms();
     }
 
@@ -52,11 +57,11 @@ public class GameEngine
         Room outside, theatre, pub, lab, office;
 
         // create the rooms
-        outside = new Room("outside the main entrance of the university", "outside.gif");
-        theatre = new Room("in a lecture theatre", "castle.gif");
-        pub = new Room("in the campus pub", "courtyard.gif");
-        lab = new Room("in a computing lab", "stairs.gif");
-        office = new Room("the computing admin office", "dungeon.gif");
+        outside = new Room("outside the main entrance of the university", "images/outside.gif");
+        theatre = new Room("in a lecture theatre", "images/castle.gif");
+        pub = new Room("in the campus pub", "images/courtyard.gif");
+        lab = new Room("in a computing lab", "images/stairs.gif");
+        office = new Room("the computing admin office", "images/dungeon.gif");
         
         // initialise room exits
         outside.setExit("east", theatre);
@@ -71,6 +76,13 @@ public class GameEngine
         lab.setExit("east", office);
 
         office.setExit("west", lab);
+
+	salle.put("outside", outside);
+ 	salle.put("theatre", theatre);
+        salle.put("pub", pub);
+        salle.put("lab", lab);
+        salle.put("office", office);
+
 
         currentRoom = outside;  // start game outside
     }
