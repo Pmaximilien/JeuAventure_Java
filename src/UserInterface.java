@@ -18,6 +18,7 @@ public class UserInterface implements ActionListener
     private JTextField entryField;
     private JTextArea log;
     private JLabel image;
+    private JButton b1;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -82,9 +83,13 @@ public class UserInterface implements ActionListener
     {
         myFrame = new JFrame("Zork");
         entryField = new JTextField(34);
-
+        b1 = new JButton("BOUTON 1");
+        
         log = new JTextArea();
         log.setEditable(false);
+        
+       
+        
         JScrollPane listScroller = new JScrollPane(log);
         listScroller.setPreferredSize(new Dimension(200, 200));
         listScroller.setMinimumSize(new Dimension(100,100));
@@ -97,12 +102,22 @@ public class UserInterface implements ActionListener
         panel.add(listScroller, BorderLayout.CENTER);
         panel.add(entryField, BorderLayout.SOUTH);
 
+        b1.setText("Exit");
+        b1.setSize(100,50);
+        b1.setLocation(0, 0);
+       
+//        myFrame.getContentPane().add(b1,BorderLayout.EAST);
+        myFrame.add(b1);
+       
+        b1.addActionListener(this);
+        
         myFrame.getContentPane().add(panel, BorderLayout.CENTER);
 
         // add some event listeners to some components
         myFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
         });
+        
 
         entryField.addActionListener(this);
 
@@ -127,7 +142,8 @@ public class UserInterface implements ActionListener
      */
     private void processCommand()
     {
-        boolean finished = false;
+        @SuppressWarnings("unused")
+		boolean finished = false;
         String input = entryField.getText();
         entryField.setText("");
 

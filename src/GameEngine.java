@@ -24,7 +24,7 @@ public class GameEngine
     public GameEngine()
     {
         parser = new Parser();
-	salle = new HashMap<String, Room>();
+        salle = new HashMap<String, Room>();
 
         createRooms();
     }
@@ -77,8 +77,8 @@ public class GameEngine
 
         office.setExit("west", lab);
 
-	salle.put("outside", outside);
- 	salle.put("theatre", theatre);
+        salle.put("outside", outside);
+        salle.put("theatre", theatre);
         salle.put("pub", pub);
         salle.put("lab", lab);
         salle.put("office", office);
