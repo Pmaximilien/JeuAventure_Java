@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
-import java.awt.image.*;
+//import java.awt.image.*;
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -95,28 +95,29 @@ public class UserInterface implements ActionListener
         listScroller.setMinimumSize(new Dimension(100,100));
 
         JPanel panel = new JPanel();
+        
+        
         image = new JLabel();
 
         panel.setLayout(new BorderLayout());
         panel.add(image, BorderLayout.NORTH);
         panel.add(listScroller, BorderLayout.CENTER);
         panel.add(entryField, BorderLayout.SOUTH);
-
+       
+        
         b1.setText("Exit");
         b1.setSize(100,50);
         b1.setLocation(0, 0);
         b1.setActionCommand("quit");
         b1.addActionListener(this);
-       
         myFrame.add(b1);
-//        myFrame.getContentPane().add(b1,BorderLayout.EAST);
         
        
        
        
         
         myFrame.getContentPane().add(panel, BorderLayout.CENTER);
-
+        
         // add some event listeners to some components
         myFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
@@ -137,12 +138,12 @@ public class UserInterface implements ActionListener
     {
         // no need to check the type of action at the moment.
         // there is only one possible action: text entry
-    	if(e.getSource() == b1){
-    		String input = e.getActionCommand();
-    		engine.interpretCommand(input);
+    	if(e.getSource() == entryField){
+    		processCommand();
     	}
     	else{
-        processCommand();
+    		String input = e.getActionCommand();
+    		engine.interpretCommand(input);
     	}
     }
 
