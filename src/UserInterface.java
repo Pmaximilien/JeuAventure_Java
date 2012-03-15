@@ -83,7 +83,7 @@ public class UserInterface implements ActionListener
     {
         myFrame = new JFrame("Zork");
         entryField = new JTextField(34);
-        b1 = new JButton("BOUTON 1");
+        b1 = new JButton("quit");
         
         log = new JTextArea();
         log.setEditable(false);
@@ -105,11 +105,15 @@ public class UserInterface implements ActionListener
         b1.setText("Exit");
         b1.setSize(100,50);
         b1.setLocation(0, 0);
-       
-//        myFrame.getContentPane().add(b1,BorderLayout.EAST);
-        myFrame.add(b1);
-       
+        b1.setActionCommand("quit");
         b1.addActionListener(this);
+       
+        myFrame.add(b1);
+//        myFrame.getContentPane().add(b1,BorderLayout.EAST);
+        
+       
+       
+       
         
         myFrame.getContentPane().add(panel, BorderLayout.CENTER);
 
@@ -133,7 +137,13 @@ public class UserInterface implements ActionListener
     {
         // no need to check the type of action at the moment.
         // there is only one possible action: text entry
+    	if(e.getSource() == b1){
+    		String input = e.getActionCommand();
+    		engine.interpretCommand(input);
+    	}
+    	else{
         processCommand();
+    	}
     }
 
     /**
