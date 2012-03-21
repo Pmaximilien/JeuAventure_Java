@@ -18,11 +18,14 @@ public class GameEngine
     private UserInterface gui;
     private HashMap <String, Room> salle;
 
+    int ventre;
+
     /**
      * Constructor for objects of class GameEngine
      */
     public GameEngine()
     {
+    	ventre = 20;
         parser = new Parser();
         salle = new HashMap<String, Room>();
 
@@ -105,14 +108,23 @@ public class GameEngine
         String commandWord = command.getCommandWord();
         if (commandWord.equals("help"))
             printHelp();
-        else if (commandWord.equals("go"))
-            goRoom(command);
+        else if (commandWord.equals("go")){
+		if (ventre >= 5){
+            		goRoom(command);
+			ventre -= 5;}
+		else {
+			gui.println("You need to eat something");
+			}
+		}
         else if (commandWord.equals("quit")) {
             if(command.hasSecondWord())
                 gui.println("Quit what?");
             else
-                endGame();
-        }
+                endGame();}
+	else if (commandWord.equals("eat"))
+		ventre += 5;
+	else if (commandWord.equals("status"))
+		gui.println("Etat : "+ ventre);
     }
 
     // implementations of user commands:
