@@ -57,45 +57,47 @@ public class GameEngine
      */
     private void createRooms()
     {
-        Room outside, theatre, pub, lab, office;
-	Item bouteille, cadavre_moisie;
+        Room porteVille, entreeVille, marchand, place2, place3;
+        Item bouteille, cadavre_moisie;
 
         // create the rooms
-        outside = new Room("outside the main entrance of the university", "images/outside.gif");
-        theatre = new Room("in a lecture theatre", "images/castle.gif");
-        pub = new Room("in the campus pub", "images/courtyard.gif");
-        lab = new Room("in a computing lab", "images/stairs.gif");
-        office = new Room("the computing admin office", "images/dungeon.gif");
+        porteVille  = new Room("Porte de la ville", "images/img_840x525/entree.jpg");
+        entreeVille = new Room("Entrée de la ville", "images/img_840x525/place1.jpg");
+        marchand    = new Room("Marchand", "images/img_840x525/maison1.jpg");
+        place2      = new Room("Place 1", "images/img_840x525/place2.jpg");
+        place3      = new Room("Place 2", "images/img_840x525/place3.jpg");
         
         // initialise room exits
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        porteVille.setExit("ville", entreeVille);
+        
+        entreeVille.setExit("porte_de_la_ville", porteVille);
+        entreeVille.setExit("marchand", marchand);
+        entreeVille.setExit("place2", place2);
+        entreeVille.setExit("place3", place3);
+        
+        marchand.setExit("entrée_de_la_ville", entreeVille);
 
-        theatre.setExit("west", outside);
+        place2.setExit("entrée_de_la_ville", entreeVille);
+        place2.setExit("place3", place3);
 
-        pub.setExit("east", outside);
-
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        salle.put("outside", outside);
-        salle.put("theatre", theatre);
-        salle.put("pub", pub);
-        salle.put("lab", lab);
-        salle.put("office", office);
+        place3.setExit("entrée_de_la_ville", entreeVille);
+        place3.setExit("place2",place2);
+        
+        salle.put("porte_de_la_ville", porteVille);
+        salle.put("entrée_de_la_ville", entreeVille);
+        salle.put("marchand", marchand);
+        salle.put("place2", place2);
+        salle.put("place3", place2);
 
 	bouteille = new Item("bouteille", 1, 1);
 	cadavre_moisie = new Item("cadavre", 0, 50);
 
-	theatre.setItem("bouteille", bouteille);
-	theatre.setItem("cadavre_moisie", cadavre_moisie);
+	marchand.setItem("bouteille", bouteille);
+	marchand.setItem("cadavre_moisie", cadavre_moisie);
 
 
 
-        currentRoom = outside;  // start game outside
+        currentRoom = porteVille;  // start game outside
     }
 
     /**
