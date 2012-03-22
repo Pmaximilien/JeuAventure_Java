@@ -18,7 +18,7 @@ public class UserInterface implements ActionListener
     private JTextField entryField;
     private JTextArea log;
     private JLabel image;
-    private JButton b1;
+    private JButton exit,eat,help,status;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -83,7 +83,10 @@ public class UserInterface implements ActionListener
     {
         myFrame = new JFrame("Zork");
         entryField = new JTextField(34);
-        b1 = new JButton("quit");
+        exit = new JButton("quit");
+        eat  = new JButton("eat");
+        help  = new JButton("help");
+        status  = new JButton("status");
         
         log = new JTextArea();
         log.setEditable(false);
@@ -95,7 +98,7 @@ public class UserInterface implements ActionListener
         listScroller.setMinimumSize(new Dimension(100,100));
 
         JPanel panel = new JPanel();
-        
+        JPanel panelCommande = new JPanel();
         
         image = new JLabel();
 
@@ -103,21 +106,30 @@ public class UserInterface implements ActionListener
         panel.add(image, BorderLayout.NORTH);
         panel.add(listScroller, BorderLayout.CENTER);
         panel.add(entryField, BorderLayout.SOUTH);
-       
+        panelCommande.add(exit);
+        panelCommande.add(eat);
+        panelCommande.add(help);
+        panelCommande.add(status);
         
-        b1.setText("Exit");
-        b1.setSize(100,50);
-        b1.setLocation(0, 0);
-        b1.setActionCommand("quit");
-        b1.addActionListener(this);
-        myFrame.add(b1);
-        
+        exit.setText("Exit");
+        exit.setSize(100,50);
+        exit.setActionCommand("quit");
+        exit.addActionListener(this);
+ 
+        eat.setSize(100,50);
+        eat.setActionCommand("eat");
+        eat.addActionListener(this);
        
+        help.setSize(100,50);
+        help.setActionCommand("help");
+        help.addActionListener(this);
        
-       
+        status.setSize(100,50);
+        status.setActionCommand("status");
+        status.addActionListener(this);
         
         myFrame.getContentPane().add(panel, BorderLayout.CENTER);
-        
+        myFrame.getContentPane().add(panelCommande, BorderLayout.SOUTH);
         // add some event listeners to some components
         myFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {System.exit(0);}
