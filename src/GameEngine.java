@@ -55,6 +55,7 @@ public class GameEngine
     private void createRooms()
     {
         Room outside, theatre, pub, lab, office;
+	Item bouteille, cadavre_moisie;
 
         // create the rooms
         outside = new Room("outside the main entrance of the university", "images/outside.gif");
@@ -82,6 +83,13 @@ public class GameEngine
         salle.put("pub", pub);
         salle.put("lab", lab);
         salle.put("office", office);
+
+	bouteille = new Item("bouteille", 1, 1);
+	cadavre_moisie = new Item("cadavre", 0, 50);
+
+	theatre.setItem("bouteille", bouteille);
+	theatre.setItem("cadavre_moisie", cadavre_moisie);
+
 
 
         currentRoom = outside;  // start game outside
@@ -151,6 +159,7 @@ public class GameEngine
         else {
             currentRoom = nextRoom;
             gui.println(currentRoom.getLongDescription());
+	    gui.println(currentRoom.getItemString());
             if(currentRoom.getImageName() != null)
                 gui.showImage(currentRoom.getImageName());
         }
