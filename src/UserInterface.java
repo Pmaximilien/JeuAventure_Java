@@ -110,7 +110,7 @@ public class UserInterface implements ActionListener
         panelCommande.add(eat);
         panelCommande.add(help);
         panelCommande.add(status);
-        
+       
         exit.setText("Exit");
         exit.setSize(100,50);
         exit.setActionCommand("quit");
