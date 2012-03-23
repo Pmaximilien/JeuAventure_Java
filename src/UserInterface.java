@@ -18,7 +18,7 @@ public class UserInterface implements ActionListener
     private JTextField entryField;
     private JTextArea log;
     private JLabel image;
-    private JButton exit,eat,help,status;
+    private JButton exit,eat,help,status,back;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -81,14 +81,14 @@ public class UserInterface implements ActionListener
      */
     private void createGUI()
     {
-        myFrame = new JFrame("Zork");
+        myFrame    = new JFrame("Zork");
         entryField = new JTextField(34);
-        exit = new JButton("quit");
-        eat  = new JButton("eat");
-        help  = new JButton("help");
-        status  = new JButton("status");
-        
-        log = new JTextArea();
+        exit       = new JButton("quit");
+        eat        = new JButton("eat");
+        help       = new JButton("help");
+        status     = new JButton("status");
+        back       = new JButton("back");
+        log        = new JTextArea();
         log.setEditable(false);
         
        
@@ -110,6 +110,7 @@ public class UserInterface implements ActionListener
         panelCommande.add(eat);
         panelCommande.add(help);
         panelCommande.add(status);
+        panelCommande.add(back);
        
         exit.setText("Exit");
         exit.setSize(100,50);
@@ -127,6 +128,10 @@ public class UserInterface implements ActionListener
         status.setSize(100,50);
         status.setActionCommand("status");
         status.addActionListener(this);
+        
+        back.setSize(100,50);
+        back.setActionCommand("back");
+        back.addActionListener(this);
         
         myFrame.getContentPane().add(panel, BorderLayout.CENTER);
         myFrame.getContentPane().add(panelCommande, BorderLayout.SOUTH);

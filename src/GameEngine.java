@@ -10,14 +10,16 @@
  * @version 1.0 (Jan 2003)
  */
 import java.util.HashMap;
+import java.util.Stack;
 
 public class GameEngine
 {
     private Parser parser;
     private Room currentRoom;
+    private Stack<Room> backRoom;
     private UserInterface gui;
     private HashMap <String, Room> salle;
-
+    
     int ventre;
 
     /**
@@ -28,7 +30,7 @@ public class GameEngine
     	ventre = 20;
         parser = new Parser();
         salle = new HashMap<String, Room>();
-
+        backRoom = new Stack<Room>();
         createRooms();
     }
 
@@ -82,7 +84,7 @@ public class GameEngine
 
         place3.setExit("entrée_de_la_ville", entreeVille);
         place3.setExit("place2",place2);
-        
+      
         salle.put("porte_de_la_ville", porteVille);
         salle.put("entrée_de_la_ville", entreeVille);
         salle.put("marchand", marchand);
@@ -96,7 +98,7 @@ public class GameEngine
 	marchand.setItem("cadavre_moisie", cadavre_moisie);
 
 
-
+		
         currentRoom = porteVille;  // start game outside
     }
 
@@ -135,7 +137,11 @@ public class GameEngine
 		ventre += 5;
 	else if (commandWord.equals("status"))
 		gui.println("Etat : "+ ventre);
+    
+    else if (commandWord.equals("back")){
+    	goBack();
     }
+}
 
     // implementations of user commands:
 
@@ -167,18 +173,31 @@ public class GameEngine
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
+        
         if (nextRoom == null)
             gui.println("There is no door!");
         else {
+        	backRoom.push(currentRoom);
             currentRoom = nextRoom;
             gui.println(currentRoom.getLongDescription());
-	    gui.println(currentRoom.getItemString());
+            gui.println(currentRoom.getItemString());
             if(currentRoom.getImageName() != null)
                 gui.showImage(currentRoom.getImageName());
         }
     }
 
+    private void goBack(){
+    	if(backRoom.empty())
+    		gui.println("Pas de back Room");
+    	else{
+    		currentRoom = backRoom.pop();
+    		gui.println(currentRoom.getLongDescription());
+    		gui.println(currentRoom.getItemString());
+            if(currentRoom.getImageName() != null)
+                gui.showImage(currentRoom.getImageName());
+        }
+    	
+    }
     private void endGame()
     {
         gui.println("Thank you for playing.  Good bye.");
