@@ -11,6 +11,8 @@
  */
 import java.util.HashMap;
 import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class GameEngine
 {
@@ -137,10 +139,13 @@ public class GameEngine
 		ventre += 5;
 	else if (commandWord.equals("status"))
 		gui.println("Etat : "+ ventre);
+	else if (commandWord.equals("back"))
+    		goBack();
+	else if (commandWord.equals("execute"))
+		execute(command);
+		
+	
     
-    else if (commandWord.equals("back")){
-    	goBack();
-    }
 }
 
     // implementations of user commands:
@@ -185,6 +190,29 @@ public class GameEngine
                 gui.showImage(currentRoom.getImageName());
         }
     }
+    
+
+    private void execute(Command command) 
+    {
+	File fichier;
+	Scanner it;
+
+	if(!command.hasSecondWord()) {
+		gui.println("I see what ? What ?");
+		return;}
+	else{
+		try {
+			fichier = new File(command.getSecondWord());
+			it = new Scanner(fichier);
+			while(it.hasNextLine())
+    				interpretCommand(it.nextLine());
+
+		} catch (FileNotFoundException e){
+				gui.println("Pas de fichier...");
+		}
+	}
+}
+			
 
     private void goBack(){
     	if(backRoom.empty())
