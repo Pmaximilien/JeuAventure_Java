@@ -21,6 +21,7 @@ public class GameEngine
     private Stack<Room> backRoom;
     private UserInterface gui;
     private HashMap <String, Room> salle;
+    private Player heros;
     
     int ventre;
 
@@ -34,6 +35,7 @@ public class GameEngine
         salle = new HashMap<String, Room>();
         backRoom = new Stack<Room>();
         createRooms();
+	heros = new Player("Bitch");
     }
 
     public void setGUI(UserInterface userInterface)
@@ -66,7 +68,7 @@ public class GameEngine
 
         // create the rooms
         porteVille  = new Room("Porte de la ville", "images/img_840x525/entree.jpg");
-        entreeVille = new Room("Entrée de la ville", "images/img_840x525/place1.jpg");
+        entreeVille = new Room("Entree de la ville", "images/img_840x525/place1.jpg");
         marchand    = new Room("Marchand", "images/img_840x525/maison1.jpg");
         place2      = new Room("Place 1", "images/img_840x525/place2.jpg");
         place3      = new Room("Place 2", "images/img_840x525/place3.jpg");
@@ -79,16 +81,16 @@ public class GameEngine
         entreeVille.setExit("place2", place2);
         entreeVille.setExit("place3", place3);
         
-        marchand.setExit("entrée_de_la_ville", entreeVille);
+        marchand.setExit("entree_de_la_ville", entreeVille);
 
-        place2.setExit("entrée_de_la_ville", entreeVille);
+        place2.setExit("entree_de_la_ville", entreeVille);
         place2.setExit("place3", place3);
 
-        place3.setExit("entrée_de_la_ville", entreeVille);
+        place3.setExit("entree_de_la_ville", entreeVille);
         place3.setExit("place2",place2);
       
         salle.put("porte_de_la_ville", porteVille);
-        salle.put("entrée_de_la_ville", entreeVille);
+        salle.put("entree_de_la_ville", entreeVille);
         salle.put("marchand", marchand);
         salle.put("place2", place2);
         salle.put("place3", place2);
@@ -135,6 +137,15 @@ public class GameEngine
                 gui.println("Quit what?");
             else
                 endGame();}
+	else if (commandWord.equals("look")){
+		if (command.hasSecondWord()){
+			if ((command.getSecondWord()).equals("sac")){
+				gui.println("In the bag : ");
+				gui.println(heros.getSacString());
+			}
+		}
+	}
+				
 	else if (commandWord.equals("eat"))
 		ventre += 5;
 	else if (commandWord.equals("status"))
@@ -143,6 +154,8 @@ public class GameEngine
     		goBack();
 	else if (commandWord.equals("execute"))
 		execute(command);
+	else if (commandWord.equals("pick"))
+		pick(command);
 		
 	
     
@@ -212,6 +225,23 @@ public class GameEngine
 		}
 	}
 }
+
+    private void pick(Command command) {
+    	String item;
+
+    	if(!command.hasSecondWord()) { 
+		gui.println("Wath da fuck... ?");
+		return;}
+	else {
+		item = command.getSecondWord();
+		if (currentRoom.hasItem(item))
+			heros.add_item(currentRoom.removeItem(item));
+		else
+				gui.println("This item doesn't exist");
+	}
+    }
+
+		
 			
 
     private void goBack(){

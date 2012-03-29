@@ -94,6 +94,29 @@ public class Room
 	return info.toString();
     }
 
+    public boolean hasItem(String test){
+
+    	Set<String> keys = items.keySet();
+	for(String item : keys){
+		if (test.equals(item))
+			return true;
+	}
+	return false;
+    }
+
+    public Item removeItem(String name){
+    	Item ret;
+
+    	Set<String> keys = items.keySet();
+	for(String item : keys){
+		if (name.equals(item)){
+			ret = items.get(name);
+			items.remove(name);
+			return ret;}
+     	}	
+	return null;
+}
+
 
 
     public String getLongDescription(){

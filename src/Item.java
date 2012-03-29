@@ -35,11 +35,16 @@ public class Item
 	{
 		return poids;
 	}
+
 	public String getInfoItem(){
 		String resInfo = new String("nom ");
 
 		resInfo += nom_item + " " + poids + " " + prix;
 
 		return resInfo;
+	}
+
+	public String getNameItem(){
+		return nom_item;
 	}
 }
