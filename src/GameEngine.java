@@ -143,7 +143,9 @@ public class GameEngine
 				gui.println("In the bag : ");
 				gui.println(heros.getSacString());
 			}
-		}
+		}else{
+        		gui.println(currentRoom.getLongDescription());}
+			
 	}
 				
 	else if (commandWord.equals("eat"))
@@ -154,8 +156,10 @@ public class GameEngine
     		goBack();
 	else if (commandWord.equals("execute"))
 		execute(command);
-	else if (commandWord.equals("pick"))
-		pick(command);
+	else if (commandWord.equals("take"))
+		take(command);
+	else if (commandWord.equals("drop"))
+		drop(command);
 		
 	
     
@@ -226,7 +230,21 @@ public class GameEngine
 	}
 }
 
-    private void pick(Command command) {
+    private void drop(Command command) {
+    	String item;
+
+    	if(!command.hasSecondWord()) { 
+		gui.println("Wath da fuck... ?");
+		return;}
+	else {
+		item = command.getSecondWord();
+		if (heros.hasItem(item))
+			currentRoom.addItem(heros.drop_item(item));
+		else
+				gui.println("This item doesn't exist");
+	}
+    }
+    private void take(Command command) {
     	String item;
 
     	if(!command.hasSecondWord()) { 
