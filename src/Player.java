@@ -24,9 +24,12 @@ class Player {
 
 
 	public Item drop_item(String name){
-		Item drop = sac.get(name);		
-
-		return drop;
+		if (hasItem(name)){
+			Item drop = sac.get(name);		
+			charge -= drop.getPoids();
+			sac.remove(name);
+			return drop;}
+		return null;
 	}
 
 	public boolean add_item(Item nouveau){
@@ -45,6 +48,15 @@ class Player {
 	// Ascesseur
 	public int getCharge(){
 		return charge;
+	}
+
+	public boolean hasItem(String test){
+		Set<String> keys = sac.keySet();	
+		for(String item : keys)
+			if (test.equals(item))
+				return true;
+
+		return false;
 	}
 
 	public String getSacString(){

@@ -116,6 +116,9 @@ public class Room
      	}	
 	return null;
 }
+    public void addItem(Item add){
+    	items.put(add.getNameItem(), add);
+   }
 
 
 
