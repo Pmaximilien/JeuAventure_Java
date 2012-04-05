@@ -7,20 +7,32 @@ class Player {
 	private String name;
 	private HashMap <String, Item> sac;
 	private int charge;
-
+	private int ventre;
 
 	public Player(String nom) {
 		name = nom;
 		sac = new HashMap<String, Item>(); 
 		charge = 0;
+		ventre = 20;	
 	}
 
 	public Player(){
 		name = "Unknow";
 		sac = new HashMap<String, Item>(); 
 		charge = 0;
+		ventre = 20;
 	}
 
+	public int get_ventre(){
+		return ventre;
+	}
+		
+
+	public void add_ventre(int nb){
+		ventre+=nb;
+		return;
+	}
+	
 
 
 	public Item drop_item(String name){
