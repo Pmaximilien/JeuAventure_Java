@@ -113,8 +113,8 @@ public class GameEngine
      */
     public void interpretCommand(String commandLine) 
     {
-        gui.println(commandLine);
         Command command = parser.getCommand(commandLine);
+
 
         if(command.isUnknown()) {
             gui.println("I don't know what you mean...");
@@ -161,7 +161,7 @@ public class GameEngine
 	else if (commandWord.equals("drop"))
 		drop(command);
 		
-	
+
     
 }
 
@@ -221,7 +221,7 @@ public class GameEngine
 		try {
 			fichier = new File(command.getSecondWord());
 			it = new Scanner(fichier);
-			while(it.hasNextLine())
+			while(it.hasNextLine()) System.out.println("test");
     				interpretCommand(it.nextLine());
 
 		} catch (FileNotFoundException e){
