@@ -1,4 +1,4 @@
-/**
+/*
  *  This class is part of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.
  * 
@@ -98,6 +98,7 @@ public class GameEngine
 
 	marchand.setItem("bouteille", bouteille);
 	marchand.setItem("cadavre_moisie", cadavre_moisie);
+	marchand.setItem("pomme", cadavre_moisie);
 
 
 		
