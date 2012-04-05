@@ -62,7 +62,7 @@ public class GameEngine
     private void createRooms()
     {
         Room porteVille, entreeVille, marchand, place2, place3;
-        Item bouteille, cadavre_moisie;
+        Item bouteille, cadavre_moisie, cookie;
 
         // create the rooms
         porteVille  = new Room("Porte de la ville", "images/img_840x525/entree.jpg");
@@ -95,11 +95,11 @@ public class GameEngine
 
 	bouteille = new Item("bouteille", 1, 1);
 	cadavre_moisie = new Item("cadavre", 0, 50);
+	cookie = new Item("cookie");
 
 	marchand.setItem("bouteille", bouteille);
 	marchand.setItem("cadavre_moisie", cadavre_moisie);
-	marchand.setItem("pomme", cadavre_moisie);
-
+	entreeVille.setItem("cookie", cookie);
 
 		
         currentRoom = porteVille;  // start game outside
@@ -121,6 +121,8 @@ public class GameEngine
         }
 
         String commandWord = command.getCommandWord();
+	String secondWord = command.getSecondWord();
+
         if (commandWord.equals("help"))
             printHelp();
         else if (commandWord.equals("go")){
@@ -147,8 +149,16 @@ public class GameEngine
 			
 	}
 				
-	else if (commandWord.equals("eat"))
+	else if (commandWord.equals("eat")){
 		heros.add_ventre(5);
+		if(secondWord.equals("cookie")){
+			if(heros.hasItem("cookie")){
+			gui.println("la capacité de votre sac est passée de "+heros.get_capacite()+" à ");
+				heros.add_capacite();
+			gui.print(""+heros.get_capacite()+" " );
+			}
+		}
+	}
 	else if (commandWord.equals("status"))
 		gui.println("Etat : "+ heros.get_ventre());
 	else if (commandWord.equals("back"))
@@ -273,6 +283,8 @@ public class GameEngine
         }
     	
     }
+
+
     private void endGame()
     {
         gui.println("Thank you for playing.  Good bye.");

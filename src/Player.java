@@ -8,12 +8,14 @@ class Player {
 	private HashMap <String, Item> sac;
 	private int charge;
 	private int ventre;
+	private int charge_max;
 
 	public Player(String nom) {
 		name = nom;
 		sac = new HashMap<String, Item>(); 
 		charge = 0;
-		ventre = 20;	
+		ventre = 20;
+		charge_max=100;	
 	}
 
 	public Player(){
@@ -21,6 +23,7 @@ class Player {
 		sac = new HashMap<String, Item>(); 
 		charge = 0;
 		ventre = 20;
+		charge_max=100;
 	}
 
 	public int get_ventre(){
@@ -33,7 +36,14 @@ class Player {
 		return;
 	}
 	
+	public int get_capacite(){
+		return charge_max;
+	}	
 
+	public void add_capacite(){
+		charge_max+=20;
+		return;
+	}			
 
 	public Item drop_item(String name){
 		if (hasItem(name)){
@@ -45,7 +55,7 @@ class Player {
 	}
 
 	public boolean add_item(Item nouveau){
-		if (charge + nouveau.getPoids() < 200){
+		if (charge + nouveau.getPoids() < charge_max){
 			sac.put(nouveau.getNameItem(), nouveau);
 			charge += nouveau.getPoids();
 			return true;
