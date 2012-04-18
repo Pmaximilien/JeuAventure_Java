@@ -22,6 +22,7 @@ public class GameEngine
     private UserInterface gui;
     private HashMap <String, Room> salle;
     private Player heros;
+    private int timeline;
 
 
     /**
@@ -34,6 +35,8 @@ public class GameEngine
         backRoom = new Stack<Room>();
         createRooms();
 	heros = new Player("Bitch");
+
+	timeline = 5;
     }
 
     public void setGUI(UserInterface userInterface)
@@ -120,6 +123,20 @@ public class GameEngine
             return;
         }
 
+	// Test fin de jeu
+	if (timeline < 0){
+		gui.println("-------------------------");
+		gui.println("|               ");
+		gui.println("|    ARrRg !    ");
+		gui.println("|   Trop lent ! ");
+		gui.println("|   T'es mort ! ");
+		gui.println("|               ");
+		gui.println("|------------------------");
+		gui.println("");
+                endGame();
+		return; }
+
+
         String commandWord = command.getCommandWord();
 	String secondWord = command.getSecondWord();
 
@@ -150,14 +167,7 @@ public class GameEngine
 	}
 				
 	else if (commandWord.equals("eat")){
-		heros.add_ventre(5);
-		if(secondWord.equals("cookie")){
-			if(heros.hasItem("cookie")){
-			gui.println("la capacité de votre sac est passée de "+heros.get_capacite()+" à ");
-				heros.add_capacite();
-			gui.print(""+heros.get_capacite()+" " );
-			}
-		}
+		eat(command);
 	}
 	else if (commandWord.equals("status"))
 		gui.println("Etat : "+ heros.get_ventre());
@@ -175,6 +185,20 @@ public class GameEngine
 }
 
     // implementations of user commands:
+
+    private void eat(Command command) {
+
+    	timeline--;
+	heros.add_ventre(5);
+	if((command.getSecondWord()).equals("cookie")){
+		if(heros.hasItem("cookie")){
+			gui.println("la capacité de votre sac est passée de "+heros.get_capacite()+" à ");
+			heros.add_capacite();
+			gui.print(""+heros.get_capacite()+" " );
+			heros.drop_item("cookie");
+			}
+		}
+	}
 
     /**
      * Print out some help information.
@@ -208,7 +232,8 @@ public class GameEngine
         if (nextRoom == null)
             gui.println("There is no door!");
         else {
-        	backRoom.push(currentRoom);
+	    timeline--;
+            backRoom.push(currentRoom);
             currentRoom = nextRoom;
             gui.println(currentRoom.getLongDescription());
             gui.println(currentRoom.getItemString());
@@ -222,6 +247,7 @@ public class GameEngine
     {
 	File fichier;
 	Scanner it;
+
 
 	if(!command.hasSecondWord()) {
 		gui.println("I see what ? What ?");
@@ -247,10 +273,11 @@ public class GameEngine
 		return;}
 	else {
 		item = command.getSecondWord();
-		if (heros.hasItem(item))
-			currentRoom.addItem(heros.drop_item(item));
-		else
-				gui.println("This item doesn't exist");
+		if (heros.hasItem(item)){
+			timeline--;
+			currentRoom.addItem(heros.drop_item(item));}
+		else{
+				gui.println("This item doesn't exist");}
 	}
     }
     private void take(Command command) {
@@ -261,10 +288,11 @@ public class GameEngine
 		return;}
 	else {
 		item = command.getSecondWord();
-		if (currentRoom.hasItem(item))
+		if (currentRoom.hasItem(item)){
 			heros.add_item(currentRoom.removeItem(item));
-		else
-				gui.println("This item doesn't exist");
+			timeline--;}
+		else{
+				gui.println("This item doesn't exist");}
 	}
     }
 
@@ -275,6 +303,7 @@ public class GameEngine
     	if(backRoom.empty())
     		gui.println("Pas de back Room");
     	else{
+		timeline--;
     		currentRoom = backRoom.pop();
     		gui.println(currentRoom.getLongDescription());
     		gui.println(currentRoom.getItemString());
