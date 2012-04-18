@@ -36,7 +36,7 @@ public class GameEngine
         createRooms();
 	heros = new Player("Bitch");
 
-	timeline = 5;
+	timeline = 20;
     }
 
     public void setGUI(UserInterface userInterface)
@@ -162,7 +162,8 @@ public class GameEngine
 				gui.println(heros.getSacString());
 			}
 		}else{
-        		gui.println(currentRoom.getLongDescription());}
+        		gui.println(currentRoom.getLongDescription());
+            		gui.println(currentRoom.getItemString());}
 			
 	}
 				
@@ -275,7 +276,8 @@ public class GameEngine
 		item = command.getSecondWord();
 		if (heros.hasItem(item)){
 			timeline--;
-			currentRoom.addItem(heros.drop_item(item));}
+			Item truc =  heros.drop_item(item);
+			currentRoom.addItem(truc);}
 		else{
 				gui.println("This item doesn't exist");}
 	}
