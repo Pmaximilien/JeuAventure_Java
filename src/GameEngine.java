@@ -77,7 +77,7 @@ public class GameEngine
         // initialise room exits
         porteVille.setExit("ville", entreeVille);
         
-        entreeVille.setExit("porte_de_la_ville", porteVille);
+        //entreeVille.setExit("porte_de_la_ville", porteVille);
         entreeVille.setExit("marchand", marchand);
         entreeVille.setExit("place2", place2);
         entreeVille.setExit("place3", place3);
@@ -233,6 +233,11 @@ public class GameEngine
         if (nextRoom == null)
             gui.println("There is no door!");
         else {
+		deplace(nextRoom);
+        }
+    }
+
+    public void deplace(Room nextRoom){
 	    timeline--;
             backRoom.push(currentRoom);
             currentRoom = nextRoom;
@@ -240,8 +245,7 @@ public class GameEngine
             gui.println(currentRoom.getItemString());
             if(currentRoom.getImageName() != null)
                 gui.showImage(currentRoom.getImageName());
-        }
-    }
+	}
     
 
     private void execute(Command command) 
