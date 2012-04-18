@@ -66,6 +66,7 @@ public class GameEngine
     {
         Room porteVille, entreeVille, marchand, place2, place3;
         Item bouteille, cadavre_moisie, cookie;
+	Beamer start;
 
         // create the rooms
         porteVille  = new Room("Porte de la ville", "images/img_840x525/entree.jpg");
@@ -99,9 +100,11 @@ public class GameEngine
 	bouteille = new Item("bouteille", 1, 1);
 	cadavre_moisie = new Item("cadavre", 0, 50);
 	cookie = new Item("cookie");
+	start = new Beamer(porteVille, this);
 
 	marchand.setItem("bouteille", bouteille);
 	marchand.setItem("cadavre_moisie", cadavre_moisie);
+	place2.setItem(start.getNameItem(), start);
 	entreeVille.setItem("cookie", cookie);
 
 		
