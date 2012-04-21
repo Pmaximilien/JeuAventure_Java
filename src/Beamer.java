@@ -5,12 +5,10 @@ public class Beamer extends Item
 {
 	private boolean charge;
 	Room destination;
-	GameEngine context;
 
-	public Beamer(Room set, GameEngine jeu)
+	public Beamer(Room set)
 	{
 		super("téléporteur", 1, 1);
-		context = jeu;
 		charge = false;
 		destination = set;
 	}
@@ -19,13 +17,15 @@ public class Beamer extends Item
 		charge = true;
 	}
 
-	public void use(){
+	public boolean use(Player hero){
 		if (charge){
 			charge = false;
-			context.deplace(destination);
+			hero.teleporte(destination);
+			return true;
 		}
 		else{
 			System.out.println("Votre téléporteur n'est pas chargé");
+			return false;
 		}
 
 	}

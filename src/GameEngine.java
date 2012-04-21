@@ -17,7 +17,6 @@ import java.util.*;
 public class GameEngine
 {
     private Parser parser;
-    private Room currentRoom;
     private Stack<Room> backRoom;
     private UserInterface gui;
     private HashMap <String, Room> salle;
@@ -33,8 +32,9 @@ public class GameEngine
         parser = new Parser();
         salle = new HashMap<String, Room>();
         backRoom = new Stack<Room>();
-        createRooms();
 	heros = new Player("Bitch");
+        createRooms();
+
 
 	timeline = 20;
     }
@@ -55,8 +55,8 @@ public class GameEngine
         gui.println("World of Zuul is a new, incredibly boring adventure game.");
         gui.println("Type 'help' if you need help.");
         gui.print("\n");
-        gui.println(currentRoom.getLongDescription());
-        gui.showImage(currentRoom.getImageName());
+        gui.println((heros.get_position()).getLongDescription());
+        gui.showImage((heros.get_position()).getImageName());
     }
 
     /**
@@ -100,7 +100,7 @@ public class GameEngine
 	bouteille = new Item("bouteille", 1, 1);
 	cadavre_moisie = new Item("cadavre", 0, 50);
 	cookie = new Item("cookie");
-	start = new Beamer(porteVille, this);
+	start = new Beamer(porteVille);
 
 	marchand.setItem("bouteille", bouteille);
 	marchand.setItem("cadavre_moisie", cadavre_moisie);
@@ -108,7 +108,8 @@ public class GameEngine
 	entreeVille.setItem("cookie", cookie);
 
 		
-        currentRoom = porteVille;  // start game outside
+	heros.teleporte(porteVille);
+
     }
 
     /**
@@ -145,14 +146,30 @@ public class GameEngine
 
         if (commandWord.equals("help"))
             printHelp();
-        else if (commandWord.equals("go")){
-		if (heros.get_ventre() >= 5){
-            		goRoom(command);
-			heros.add_ventre(-5);}
-		else {
-			gui.println("You need to eat something");
-			}
+
+	else if (commandWord.equals("go")){
+	    if (command.hasSecondWord()){
+		    Room current = heros.get_position();
+		if(heros.deplace(command.getSecondWord())){ 
+		    timeline--;
+		    backRoom.push(current);
+		    current = heros.get_position();
+		    gui.println(current.getLongDescription());
+		    gui.println(current.getItemString());
+		    if(current.getImageName() != null)
+			gui.showImage(current.getImageName());
 		}
+		else{
+		    gui.println("Cannot mouve to "+command.getSecondWord());}
+	    }
+	    else{
+		gui.println("Move who ?");
+	    }
+
+	}
+		
+
+
         else if (commandWord.equals("quit")) {
             if(command.hasSecondWord())
                 gui.println("Quit what?");
@@ -165,8 +182,8 @@ public class GameEngine
 				gui.println(heros.getSacString());
 			}
 		}else{
-        		gui.println(currentRoom.getLongDescription());
-            		gui.println(currentRoom.getItemString());}
+        		gui.println((heros.get_position()).getLongDescription());
+            		gui.println((heros.get_position()).getItemString());}
 			
 	}
 				
@@ -215,40 +232,6 @@ public class GameEngine
         gui.println("around at Monash Uni, Peninsula Campus." + "\n");
         gui.print("Your command words are: " + parser.showCommands());
     }
-
-    /** 
-     * Try to go to one direction. If there is an exit, enter the new
-     * room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            gui.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-        
-        if (nextRoom == null)
-            gui.println("There is no door!");
-        else {
-		deplace(nextRoom);
-        }
-    }
-
-    public void deplace(Room nextRoom){
-	    timeline--;
-            backRoom.push(currentRoom);
-            currentRoom = nextRoom;
-            gui.println(currentRoom.getLongDescription());
-            gui.println(currentRoom.getItemString());
-            if(currentRoom.getImageName() != null)
-                gui.showImage(currentRoom.getImageName());
-	}
     
 
     private void execute(Command command) 
@@ -284,11 +267,12 @@ public class GameEngine
 		if (heros.hasItem(item)){
 			timeline--;
 			Item truc =  heros.drop_item(item);
-			currentRoom.addItem(truc);}
+			(heros.get_position()).addItem(truc);}
 		else{
 				gui.println("This item doesn't exist");}
 	}
     }
+
     private void take(Command command) {
     	String item;
 
@@ -297,8 +281,8 @@ public class GameEngine
 		return;}
 	else {
 		item = command.getSecondWord();
-		if (currentRoom.hasItem(item)){
-			heros.add_item(currentRoom.removeItem(item));
+		if ((heros.get_position()).hasItem(item)){
+			heros.add_item((heros.get_position()).removeItem(item));
 			timeline--;}
 		else{
 				gui.println("This item doesn't exist");}
@@ -309,19 +293,25 @@ public class GameEngine
 			
 
     private void goBack(){
-    	if(backRoom.empty())
-    		gui.println("Pas de back Room");
-    	else{
-		timeline--;
-    		currentRoom = backRoom.pop();
-    		gui.println(currentRoom.getLongDescription());
-    		gui.println(currentRoom.getItemString());
-            if(currentRoom.getImageName() != null)
-                gui.showImage(currentRoom.getImageName());
-        }
+    	if(backRoom.empty()){
+    		gui.println("Pas de back Room");}
+	else{
+	    if(heros.deplace(backRoom.pop())){	
+		    timeline--;
+		    Room currentRoom = heros.get_position();
+		    gui.println(currentRoom.getLongDescription());
+		    gui.println(currentRoom.getItemString());
+		    if(currentRoom.getImageName() != null)
+		    	gui.showImage(currentRoom.getImageName());
+	    else {
+	    	gui.println("Cannot back");
+	    	gui.println("");
+	    	gui.println("");
+	    }
+	}	
     	
     }
-
+}
 
     private void endGame()
     {
