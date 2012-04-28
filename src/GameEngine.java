@@ -65,7 +65,9 @@ public class GameEngine
     private void createRooms()
     {
         Room porteVille, entreeVille, marchand, place2, place3;
-        Item bouteille, cadavre_moisie, cookie;
+        Item bouteille, cadavre_moisie; 
+	Nourriture cookie;
+	Cookie_magique ass;
 	Beamer start;
 
         // create the rooms
@@ -99,13 +101,16 @@ public class GameEngine
 
 	bouteille = new Item("bouteille", 1, 1);
 	cadavre_moisie = new Item("cadavre", 0, 50);
-	cookie = new Item("cookie");
+	cookie = new Nourriture(10, "cookie");
 	start = new Beamer(porteVille);
+	ass = new Cookie_magique(10);
 
 	marchand.setItem("bouteille", bouteille);
 	marchand.setItem("cadavre_moisie", cadavre_moisie);
 	place2.setItem(start.getNameItem(), start);
 	entreeVille.setItem("cookie", cookie);
+	porteVille.setItem(ass.getNameItem(), ass);
+			
 
 		
 	heros.teleporte(porteVille);
@@ -119,6 +124,9 @@ public class GameEngine
      */
     public void interpretCommand(String commandLine) 
     {
+    	
+	Room current = heros.get_position();
+
         gui.println(commandLine);
         Command command = parser.getCommand(commandLine);
 
@@ -149,15 +157,9 @@ public class GameEngine
 
 	else if (commandWord.equals("go")){
 	    if (command.hasSecondWord()){
-		    Room current = heros.get_position();
 		if(heros.deplace(command.getSecondWord())){ 
 		    timeline--;
 		    backRoom.push(current);
-		    current = heros.get_position();
-		    gui.println(current.getLongDescription());
-		    gui.println(current.getItemString());
-		    if(current.getImageName() != null)
-			gui.showImage(current.getImageName());
 		}
 		else{
 		    gui.println("Cannot mouve to "+command.getSecondWord());}
@@ -188,8 +190,29 @@ public class GameEngine
 	}
 				
 	else if (commandWord.equals("eat")){
-		eat(command);
+		if (command.hasSecondWord()) {
+			if (!heros.utilise(command.getSecondWord())){
+				gui.println("cannot do that");}
+			else{
+				timeline--;
+			}
+		}
+		else {
+			gui.println("eat what ?");}
 	}
+
+	else if (commandWord.equals("use")){
+		if (command.hasSecondWord()) {
+			if (!heros.utilise(command.getSecondWord())){
+				gui.println("cannot do that");}
+			else{
+				timeline--;
+			}
+		}
+		else {
+			gui.println("use what ?");}
+	}
+
 	else if (commandWord.equals("status"))
 		gui.println("Etat : "+ heros.get_ventre());
 	else if (commandWord.equals("back"))
@@ -201,26 +224,18 @@ public class GameEngine
 	else if (commandWord.equals("drop"))
 		drop(command);
 		
+	if(current != heros.get_position()){
+		current = heros.get_position();
+		gui.println(current.getLongDescription());
+		gui.println(current.getItemString());
+		if(current.getImageName() != null)
+			gui.showImage(current.getImageName());
+	}
 	
     
 }
 
     // implementations of user commands:
-
-    private void eat(Command command) {
-
-    	timeline--;
-	heros.add_ventre(5);
-	if((command.getSecondWord()).equals("cookie")){
-		if(heros.hasItem("cookie")){
-			gui.println("la capacité de votre sac est passée de "+heros.get_capacite()+" à ");
-			heros.add_capacite();
-			gui.print(""+heros.get_capacite()+" " );
-			heros.drop_item("cookie");
-			}
-		}
-	}
-
     /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the 
