@@ -12,7 +12,7 @@ class Player {
 	private HashMap <String, Item> sac;
 
 	// État :
-	private int ventre;
+	public int ventre;
 	private int charge;
 	private Room currentRoom;
 
@@ -36,8 +36,15 @@ class Player {
 
 //	----- Ascesseurs -----
 
-	public int getCharge(){
+	public int getcharge(){
 		return charge;}
+
+	public int getchargemax(){
+		return charge_max;
+	}
+	public void setchargemax(int set){
+		charge_max = set;	
+	}
 
 	public int get_ventre(){
 		return ventre;}
@@ -89,6 +96,37 @@ class Player {
 
 //	----- Gestion inventaire -----
 
+
+	public boolean hasItem(String test){
+		Set<String> keys = sac.keySet();	
+		for(String item : keys)
+			if (test.equals(item))
+				return true;
+
+		return false;
+	}
+
+	public String getSacString(){
+		StringBuilder info = new StringBuilder(128);
+		
+		Set<String> keys = sac.keySet();
+		for(String item : keys)
+			info.append(" " + item);
+		return info.toString();
+		}
+
+		
+
+// 	------ Action du joueur ---- //
+
+	public boolean utilise(String item){
+		if (hasItem(item) && (sac.get(item)).isUsable()){
+			Item bouffe = sac.get(item);
+			return bouffe.use(this);
+		}
+		return false;
+	}
+
 	public Item drop_item(String name){
 		if (hasItem(name)){
 			Item drop = sac.get(name);		
@@ -108,23 +146,8 @@ class Player {
 			return false;
 		}
 	}
-
-	public boolean hasItem(String test){
-		Set<String> keys = sac.keySet();	
-		for(String item : keys)
-			if (test.equals(item))
-				return true;
-
-		return false;
-	}
-
-	public String getSacString(){
-		StringBuilder info = new StringBuilder(128);
-		
-		Set<String> keys = sac.keySet();
-		for(String item : keys)
-			info.append(" " + item);
-		return info.toString();
-		}
-	}
+}
+	
+			
+			
 
