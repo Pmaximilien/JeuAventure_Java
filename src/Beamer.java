@@ -9,7 +9,7 @@ public class Beamer extends Item
 	public Beamer(Room set)
 	{
 		super("téléporteur", 1, 1);
-		charge = false;
+		charge = true;
 		destination = set;
 	}
 
@@ -28,6 +28,10 @@ public class Beamer extends Item
 			return false;
 		}
 
+	}
+
+	public boolean isUsable(){
+		return true;
 	}
 }
 		

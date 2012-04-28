@@ -1,4 +1,3 @@
-import java.util.HashMap;
 
 
 
@@ -47,4 +46,20 @@ public class Item
 	public String getNameItem(){
 		return nom_item;
 	}
+
+	public boolean isUsable(){
+		// par défaut non-utilisable
+		return false;
+	}
+	
+	public boolean use(Player heros){
+		// Empty
+		return false;
+	}
+
+	public boolean isConso(){
+		// par défaut non-consommable (après "utilisation" on garde l'objet
+		return false;
+	}
+		
 }
