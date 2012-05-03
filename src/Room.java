@@ -17,10 +17,10 @@ import java.util.*;
 
 public class Room 
 {
-    private String description;
-    private HashMap<String, Room> exits;
-    private String imageName;
-    private HashMap<String, Item> items;
+    protected String description;
+    protected HashMap<String, Room> exits;
+    protected String imageName;
+    protected HashMap<String, Item> items;
 
     /**
      * Create a room described "description". Initially, it has
