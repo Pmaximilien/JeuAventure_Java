@@ -149,13 +149,13 @@ public class GameEngine
 		return; }
 
 
-        String commandWord = command.getCommandWord();
+        CommandWord commandWord = command.getCommandWord();
 	String secondWord = command.getSecondWord();
 
-        if (commandWord.equals("help"))
+        if (commandWord == CommandWord.HELP)
             printHelp();
 
-	else if (commandWord.equals("go")){
+        else if (commandWord == CommandWord.GO){
 	    if (command.hasSecondWord()){
 		if(heros.deplace(command.getSecondWord())){ 
 		    timeline--;
@@ -172,12 +172,12 @@ public class GameEngine
 		
 
 
-        else if (commandWord.equals("quit")) {
+        else if (commandWord == CommandWord.QUIT){
             if(command.hasSecondWord())
                 gui.println("Quit what?");
             else
                 endGame();}
-	else if (commandWord.equals("look")){
+        else if (commandWord == CommandWord.LOOK){
 		if (command.hasSecondWord()){
 			if ((command.getSecondWord()).equals("sac")){
 				gui.println("In the bag : ");
@@ -189,7 +189,7 @@ public class GameEngine
 			
 	}
 				
-	else if (commandWord.equals("eat")){
+        else if (commandWord == CommandWord.EAT){
 		if (command.hasSecondWord()) {
 			if (!heros.utilise(command.getSecondWord())){
 				gui.println("cannot do that");}
@@ -201,7 +201,7 @@ public class GameEngine
 			gui.println("eat what ?");}
 	}
 
-	else if (commandWord.equals("use")){
+        else if (commandWord == CommandWord.USE){
 		if (command.hasSecondWord()) {
 			if (!heros.utilise(command.getSecondWord())){
 				gui.println("cannot do that");}
@@ -213,15 +213,16 @@ public class GameEngine
 			gui.println("use what ?");}
 	}
 
-	else if (commandWord.equals("status"))
+        else if (commandWord == CommandWord.STATUS){
 		gui.println("Etat : "+ heros.get_ventre());
-	else if (commandWord.equals("back"))
+	}
+        else if (commandWord == CommandWord.BACK)
     		goBack();
-	else if (commandWord.equals("execute"))
+        else if (commandWord == CommandWord.EXECUTE)
 		execute(command);
-	else if (commandWord.equals("take"))
+        else if (commandWord == CommandWord.TAKE)
 		take(command);
-	else if (commandWord.equals("drop"))
+        else if (commandWord == CommandWord.DROP)
 		drop(command);
 		
 	if(current != heros.get_position()){
