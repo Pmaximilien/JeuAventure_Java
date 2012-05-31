@@ -22,9 +22,15 @@ public class Game
      */
     public Game() 
     {
-		engine = new GameEngine();
-		gui = new UserInterface(engine);
-		engine.setGUI(gui);
+	engine = new GameEngine();
+	gui = new UserInterface(engine);
+    }
+
+    public void play()
+    {
+
+	engine.setGUI(gui);
+
     }
 }
 
