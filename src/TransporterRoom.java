@@ -3,7 +3,7 @@ import java.util.Random;
 
 
 
-
+/*
 public class TransporterRoom extends Room{
 	private Random hasard;
 
@@ -19,4 +19,4 @@ public class TransporterRoom extends Room{
 	private Room findRandomRoom(){
 		return exits.get(hasard.nextInt()); 
 	}
-}
+}*/
