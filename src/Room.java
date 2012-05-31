@@ -18,7 +18,7 @@ import java.util.*;
 public class Room 
 {
     protected String description;
-    protected HashMap<String, Room> exits;
+    protected HashMap<String, Door> exits;
     protected String imageName;
     protected HashMap<String, Item> items;
 
@@ -31,14 +31,14 @@ public class Room
     public Room(String description) 
     {
         this.description = description;
-        exits = new HashMap<String, Room>();
+        exits = new HashMap<String, Door>();
 	items = new HashMap<String, Item>();
     }
 
     public Room(String description, String image) 
     {
         this.description = description;
-        exits = new HashMap<String,Room>();
+        exits = new HashMap<String,Door>();
 	items = new HashMap<String,Item>();
 		setImageName(image);
     }
@@ -51,18 +51,17 @@ public class Room
      * @param west The west exit.
      */
 
-    public void setExits(String direction, Room exit){
+    public void setExits(String direction, Door exit){
     	 exits.put(direction, exit);
+    }
+
+    public Door getExit(String direction){
+   	return exits.get(direction);
     }
 
     public void setItem(String nom_item, Item obj)
     {
 	items.put(nom_item, obj);
-    }
-    	
-
-    public Room getExit(String direction){
-   	return exits.get(direction);
     }
 
 
@@ -135,7 +134,7 @@ public class Room
 		this.imageName = imageName;
 	}
 
-	public void setExit(String direction, Room neighbor) {
+	public void setExit(String direction, Door neighbor) {
 		 exits.put(direction, neighbor);
 		
 	}

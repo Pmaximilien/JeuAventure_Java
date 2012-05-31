@@ -71,27 +71,19 @@ public class GameEngine
 	Beamer start;
 
         // create the rooms
-        porteVille  = new Room("Porte de la ville", "images/img_840x525/entree.jpg");
-        entreeVille = new Room("Entree de la ville", "images/img_840x525/place1.jpg");
+        porteVille  = new Room("Porte", "images/img_840x525/entree.jpg");
+        entreeVille = new Room("Entree", "images/img_840x525/place1.jpg");
         marchand    = new Room("Marchand", "images/img_840x525/maison1.jpg");
-        place2      = new Room("Place 1", "images/img_840x525/place2.jpg");
-        place3      = new Room("Place 2", "images/img_840x525/place3.jpg");
+        place2      = new Room("Place1", "images/img_840x525/place2.jpg");
+        place3      = new Room("Place2", "images/img_840x525/place3.jpg");
         
-        // initialise room exits
-        porteVille.setExit("ville", entreeVille);
-        
-        //entreeVille.setExit("porte_de_la_ville", porteVille);
-        entreeVille.setExit("marchand", marchand);
-        entreeVille.setExit("place2", place2);
-        entreeVille.setExit("place3", place3);
-        
-        marchand.setExit("entree_de_la_ville", entreeVille);
-
-        place2.setExit("entree_de_la_ville", entreeVille);
-        place2.setExit("place3", place3);
-
-        place3.setExit("entree_de_la_ville", entreeVille);
-        place3.setExit("place2",place2);
+        // create the doors
+	
+	new Door(porteVille, entreeVille );
+	new Door(entreeVille, true, marchand, true);
+	new Door(entreeVille, true, place2, true);
+	new Door(entreeVille, true, place3, true);
+	
       
         salle.put("porte_de_la_ville", porteVille);
         salle.put("entree_de_la_ville", entreeVille);

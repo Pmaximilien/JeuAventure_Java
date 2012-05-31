@@ -64,8 +64,14 @@ class Player {
 	}
 
 	public boolean deplace(String direction){
-		return deplace(currentRoom.getExit(direction));
-	}
+		Door tmp = currentRoom.getExit(direction);
+		if (tmp == null){
+			System.out.println("Porte n f");
+			return false; }
+		else {
+			return deplace(tmp.getRoom(direction));
+		}
+}
 
 	public boolean deplace(Room nextRoom){
       		if (nextRoom == null || ventre <= 5){
