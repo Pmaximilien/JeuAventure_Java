@@ -150,6 +150,7 @@ public class GameEngine
 
 
         String commandWord = command.getCommandWord();
+	@SuppressWarnings("unused")
 	String secondWord = command.getSecondWord();
 
         if (commandWord.equals("help"))

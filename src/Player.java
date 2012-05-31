@@ -5,6 +5,7 @@ import java.util.Set;
 class Player {
 
 	// Caractèristiques :
+	@SuppressWarnings("unused")
 	private String name;
 	private int charge_max;
 
