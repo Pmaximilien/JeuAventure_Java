@@ -5,6 +5,7 @@ public class Item
 {
 	private int prix;
 	private int poids;
+	@SuppressWarnings("unused")
 	private String description;
 	private String nom_item;
 
